@@ -3,7 +3,7 @@ import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", isAdmin: false });
   const navigate = useNavigate();
 
   const handleRegister = async () => {
@@ -11,8 +11,8 @@ function Register() {
       await API.post("/auth/register", form);
       alert("Registered successfully");
       navigate("/login");
-    } catch {
-      alert("Error registering");
+    } catch (error) {
+      alert(error.response?.data?.msg || "Error registering");
     }
   };
 
@@ -37,6 +37,13 @@ function Register() {
           <input className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" type="password" placeholder="Password"
             onChange={e => setForm({ ...form, password: e.target.value })}
           />
+        </div>
+
+        <div className="mb-6 flex items-center">
+          <input type="checkbox" id="isAdmin" className="mr-2"
+            onChange={e => setForm({ ...form, isAdmin: e.target.checked })}
+          />
+          <label htmlFor="isAdmin" className="text-gray-700 text-sm">Register as Nursery Owner (Admin)</label>
         </div>
 
         <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition duration-200" onClick={handleRegister}>Register</button>
