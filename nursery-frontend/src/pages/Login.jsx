@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "", isAdmin: false });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const res = await API.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
@@ -16,6 +18,8 @@ function Login() {
       window.location.href = "/";
     } catch (error) {
       alert(error.response?.data?.msg || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,7 +47,13 @@ function Login() {
           <label htmlFor="isAdminLogin" className="text-gray-700 text-sm">Login as Nursery Owner (Admin)</label>
         </div>
 
-        <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition duration-200" onClick={handleLogin}>Login</button>
+        <button 
+          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition duration-200 disabled:opacity-70" 
+          onClick={handleLogin}
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </div>
     </div>
   );

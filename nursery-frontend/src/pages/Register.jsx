@@ -4,15 +4,19 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [form, setForm] = useState({ name: "", email: "", password: "", isAdmin: false });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    setLoading(true);
     try {
       await API.post("/auth/register", form);
       alert("Registered successfully");
       navigate("/login");
     } catch (error) {
       alert(error.response?.data?.msg || "Error registering");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,7 +50,13 @@ function Register() {
           <label htmlFor="isAdmin" className="text-gray-700 text-sm">Register as Nursery Owner (Admin)</label>
         </div>
 
-        <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition duration-200" onClick={handleRegister}>Register</button>
+        <button 
+          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition duration-200 disabled:opacity-70" 
+          onClick={handleRegister}
+          disabled={loading}
+        >
+          {loading ? "Registering..." : "Register"}
+        </button>
       </div>
     </div>
   );

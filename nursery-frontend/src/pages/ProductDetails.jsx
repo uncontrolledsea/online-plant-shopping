@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../services/api";
 import toast from "react-hot-toast";
+import Spinner from "../components/Spinner";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -46,8 +47,8 @@ function ProductDetails() {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-emerald-600"></div>
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-gray-50">
+      <Spinner />
     </div>
   );
   

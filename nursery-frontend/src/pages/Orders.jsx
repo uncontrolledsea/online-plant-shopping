@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
+import Spinner from "../components/Spinner";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -26,7 +27,7 @@ function Orders() {
         <h2 className="text-3xl font-bold text-green-800 mb-6 border-b pb-2">My Orders</h2>
 
         {loading ? (
-          <p className="text-center text-gray-500 py-4">Loading your orders...</p>
+          <Spinner />
         ) : orders.length === 0 ? (
           <p className="text-gray-500 text-center py-4">You have not placed any orders yet.</p>
         ) : (

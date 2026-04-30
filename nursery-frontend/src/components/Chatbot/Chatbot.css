@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  pointer-events: none;
 }
 
 .chatbox-toggle-btn {
@@ -22,6 +23,7 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
 }
 
 .chatbox-toggle-btn:hover {
@@ -40,19 +42,21 @@
   overflow: hidden;
   margin-bottom: 16px;
   transform-origin: bottom right;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
 }
 
 .chatbox-container.closed {
   transform: scale(0);
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
 }
 
 .chatbox-container.open {
   transform: scale(1);
   opacity: 1;
-  pointer-events: all;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .chatbox-header {
